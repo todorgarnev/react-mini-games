@@ -1,18 +1,15 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import styles from './Header.module.css';
+
+import Navigation from './Navigation/Navigation';
+import Logo from './Logo/Logo';
 
 const Header = () => {
   return (
-    <nav className={styles.headerContainer}>
-      <ul className={styles.header}>
-        <NavLink to="/" className={styles.headerItem}>HOME</NavLink>
-        <NavLink to="/troll" className={styles.headerItem}>Troll game</NavLink>
-        <NavLink to="/dragon" className={styles.headerItem}>Slaying the dragon</NavLink>
-        <NavLink to="/" className={styles.headerItem}>Rock, paper, scissors</NavLink>
-        <NavLink to="/" className={styles.headerItem}>The target sum</NavLink>
-      </ul>
-    </nav>
+    <div className={styles.header}>
+      <Logo />
+      <Navigation />
+    </div>
   );
 };
 

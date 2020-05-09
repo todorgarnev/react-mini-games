@@ -8,8 +8,8 @@ const DragonGame = React.lazy(() => import('../../containers/DragonGame/DragonGa
 const GameContainer = () => {
   const routes = (
     <React.Fragment>
-      <Route path="/troll" component={TrollGame} />
-      <Route path="/dragon" component={DragonGame} />
+      <Route path="/trollgame" component={TrollGame} />
+      <Route path="/slayingdragon" component={DragonGame} />
     </React.Fragment>
   );
 

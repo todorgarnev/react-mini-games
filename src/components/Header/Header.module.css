@@ -1,18 +1,7 @@
-.headerContainer {
-  padding: 0.5rem;
-  background-color: #e84949;
-}
-
-.headerContainer .header {
+.header {
+  padding: 0 0.5rem;
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
   align-items: center;
-}
-
-.headerContainer .header .headerItem {
-  color: #fff;
-}
-
-.headerContainer .header .headerItem.active {
-  color: yellow;
+  background-color: #e84949;
 }
