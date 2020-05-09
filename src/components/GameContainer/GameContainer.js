@@ -14,7 +14,7 @@ const GameContainer = () => {
   );
 
   return (
-    <div>
+    <div className={styles.gameContainer}>
       <Suspense fallback={<p>Loading...</p>}>
         {routes}
       </Suspense>

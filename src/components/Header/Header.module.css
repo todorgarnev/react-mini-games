@@ -1,5 +1,6 @@
 .headerContainer {
   padding: 0.5rem;
+  background-color: #e84949;
 }
 
 .headerContainer .header {
@@ -9,4 +10,9 @@
 }
 
 .headerContainer .header .headerItem {
+  color: #fff;
+}
+
+.headerContainer .header .headerItem.active {
+  color: yellow;
 }

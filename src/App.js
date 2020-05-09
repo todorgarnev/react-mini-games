@@ -7,11 +7,11 @@ import Footer from './components/Footer/Footer';
 
 function App() {
   return (
-    <React.Fragment>
+    <div className="app">
       <Header />
       <GameContainer />
       <Footer />
-    </React.Fragment>
+    </div>
   );
 }
 
