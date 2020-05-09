@@ -1,0 +1,12 @@
+.headerContainer {
+  padding: 0.5rem;
+}
+
+.headerContainer .header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.headerContainer .header .headerItem {
+}
