@@ -1,3 +1,3 @@
 export const dragonGame = {
-  title: 'Kill the dragon'
+  gameTitle: 'Kill the dragon'
 };

@@ -1,134 +1,134 @@
 export const trollGame = {
-  title: 'Forest Adventure',
+  gameTitle: 'Forest Adventure',
   intro: {
     prompt: 'You\'re walking through the forest, minding your own business, and you run into a troll! Do you FIGHT him, PAY him, or RUN?',
     options: [{
       name: 'Fight',
-      path: 'choose_fight'
+      path: 'chooseFight'
     }, {
       name: 'Pay',
-      path: 'choose_pay'
+      path: 'choosePay'
     }, {
       name: 'Run',
-      path: 'choose_run'
+      path: 'chooseRun'
     }]
   },
-  choose_fight: {
+  chooseFight: {
     prompt: 'How courageous! Are you strong?',
     options: [{
       name: 'Yes',
-      path: 'ask_smart_yes'
+      path: 'askSmartYes'
     }, {
       name: 'No',
-      path: 'ask_smart_no'
+      path: 'askSmartNo'
     }]
   },
-  ask_smart_yes: {
+  askSmartYes: {
     prompt: 'Are you smart?',
     options: [{
       name: 'Yes',
-      path: 'fight_win'
+      path: 'fightWin'
     }, {
       name: 'No',
-      path: 'fight_win'
+      path: 'fightWin'
     }]
   },
-  ask_smart_no: {
+  askSmartNo: {
     prompt: 'Are you smart?',
     options: [{
       name: 'Yes',
-      path: 'fight_win'
+      path: 'fightWin'
     }, {
       name: 'No',
-      path: 'fight_lose'
+      path: 'fightLose'
     }]
   },
-  fight_win: {
+  fightWin: {
     prompt: 'You only need one of the two! You beat the troll--nice work!',
     options: [{
       name: 'Start Again',
       path: 'intro'
     }]
   },
-  fight_lose: {
+  fightLose: {
     prompt: 'You\'re not strong OR smart? Well, if you were smarter, you probably wouldn\'t have tried to fight a troll. You lose!',
     options: [{
       name: 'Start Again',
       path: 'intro'
     }]
   },
-  choose_pay: {
-    prompt: 'All right, we\'ll pay the troll.Do you have any money?',
+  choosePay: {
+    prompt: 'All right, we\'ll pay the troll. Do you have any money?',
     options: [{
       name: 'Yes',
-      path: 'pay_yes'
+      path: 'payYes'
     }, {
       name: 'No',
-      path: 'pay_lose'
+      path: 'payLose'
     }]
   },
-  pay_yes: {
+  payYes: {
     prompt: 'Is your money in Troll Dollars?',
     options: [{
       name: 'Yes',
-      path: 'pay_win'
+      path: 'payWin'
     }, {
       name: 'No',
-      path: 'pay_lose'
+      path: 'payLose'
     }]
   },
-  pay_win: {
+  payWin: {
     prompt: 'Great! You pay the troll and continue on your merry way.',
     options: [{
       name: 'Start Again',
       path: 'intro'
     }]
   },
-  pay_lose: {
+  payLose: {
     prompt: 'Dang! This troll only takes Troll Dollars. You get whomped!',
     options: [{
       name: 'Start Again',
       path: 'intro'
     }]
   },
-  choose_run: {
+  chooseRun: {
     prompt: 'Let\'s book it! Are you fast?',
     options: [{
       name: 'Yes',
-      path: 'ask_fast_yes'
+      path: 'askFastYes'
     }, {
       name: 'No',
-      path: 'ask_fast_no'
+      path: 'askFastNo'
     }]
   },
-  ask_fast_yes: {
+  askFastYes: {
     prompt: 'Did you get a head start?',
     options: [{
       name: 'Yes',
-      path: 'run_win'
+      path: 'runWin'
     }, {
       name: 'No',
-      path: 'run_win'
+      path: 'runWin'
     }]
   },
-  ask_fast_no: {
+  askFastNo: {
     prompt: 'Did you get a head start?',
     options: [{
       name: 'Yes',
-      path: 'run_win'
+      path: 'runWin'
     }, {
       name: 'No',
-      path: 'run_lose'
+      path: 'runLose'
     }]
   },
-  run_win: {
+  runWin: {
     prompt: 'You got away--barely! You live to stroll through the forest another day.',
     options: [{
       name: 'Start Again',
       path: 'intro'
     }]
   },
-  run_lose: {
+  runLose: {
     prompt: 'You\'re not fast and you didn\'t get a head start? You never had a chance! The troll eats you.',
     options: [{
       name: 'Start Again',

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import styles from './GameContainer.module.css';
 
@@ -7,38 +7,45 @@ import { trollGame } from '../../shared/troll-game';
 import { dragonGame } from '../../shared/dragon-game';
 
 const GameContainer = () => {
-  const currentPath = useLocation().pathname;
-  let game = null;
+  const currentPathName = useLocation().pathname;
+  const [game, setGame] = useState(null);
+  const [step, setStep] = useState(null);
+  const [options, setOptions] = useState([]);
 
-  switch (currentPath) {
-    case '/trollgame':
-      game = trollGame;
-      break;
-    case '/slayingdragon':
-      game = dragonGame;
-      break;
-    default:
-      game = null;
-      break;
-  }
+  useEffect(() => {
+    switch (currentPathName) {
+      case '/trollgame':
+        setGame(trollGame);
+        setStep(trollGame.intro.prompt);
+        setOptions(trollGame.intro.options);
+        break;
+      case '/slayingdragon':
+        setGame(dragonGame);
+        setStep(null);
+        setOptions([]);
+        break;
+      default:
+        setGame(null);
+        setStep(null);
+        setOptions([]);
+        break;
+    }
+  }, [currentPathName]);
 
-  console.log('game >>', game);
-
-  const clickHandler = () => {
-    console.log('clicked');
+  const clickHandler = (path) => {
+    setStep(game[path].prompt);
+    setOptions(game[path].options);
   }
 
   const test = game && (
     <main className={styles.gameContainer}>
       <header>
-        <h1>{game.title}</h1>
+        <h1>{game.gameTitle}</h1>
       </header>
       <div className={styles.mainSection}>
-        <p>{game.intro.prompt}</p>
+        <p>{step}</p>
         <div className={styles.buttonsContainer}>
-          <Button click={clickHandler}>Fight</Button>
-          <Button click={clickHandler}>Pay</Button>
-          <Button click={clickHandler}>Run</Button>
+          {options.map((option, index) => <Button key={index} click={() => clickHandler(option.path)}>{option.name}</Button>)}
         </div>
       </div>
     </main>
