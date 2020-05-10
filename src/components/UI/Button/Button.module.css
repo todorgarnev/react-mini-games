@@ -11,3 +11,7 @@
   color: #fafafa;
   cursor: pointer;
 }
+
+.button:focus {
+  outline: none;
+}

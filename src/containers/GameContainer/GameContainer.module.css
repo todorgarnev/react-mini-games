@@ -1,6 +1,6 @@
 .gameContainer {
   margin: 6em auto 0;
-  width: 70%;
+  max-width: 45rem;
 }
 
 header {
@@ -21,9 +21,9 @@ h1 {
   background-color: #d6c2a3;
   color: #32363f;
   font-size: 1.1rem;
+  text-align: center;
 }
 
 .buttonsContainer {
   margin-top: 2rem;
-  text-align: center;
 }
