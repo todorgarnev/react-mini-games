@@ -7,7 +7,7 @@ import { gamesLink } from '../../../shared/constants'
 const Navigation = () => {
   return (
     <ul className={styles.navigation}>
-      {gamesLink.map(game => <NavigationItem link={game.link}>{game.name}</NavigationItem>)}
+      {gamesLink.map(game => <NavigationItem key={game.link} link={game.link}>{game.name}</NavigationItem>)}
     </ul>
   );
 };

@@ -1,0 +1,29 @@
+.gameContainer {
+  margin: 6em auto 0;
+  width: 70%;
+}
+
+header {
+  padding: 1.5rem 2rem;
+  text-align: center;
+  background-color: #e84949;
+  color: #fafafa;
+}
+
+h1 {
+  text-transform: uppercase;
+  line-height: 0.9;
+  letter-spacing: 1px;
+}
+
+.mainSection {
+  padding: 1.5rem;
+  background-color: #d6c2a3;
+  color: #32363f;
+  font-size: 1.1rem;
+}
+
+.buttonsContainer {
+  margin-top: 2rem;
+  text-align: center;
+}
