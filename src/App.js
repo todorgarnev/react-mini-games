@@ -1,15 +1,26 @@
-import React from 'react';
+import React, { Suspense } from 'react';
+import { Route, Switch } from 'react-router-dom';
 import './App.css';
 
 import Header from './components/Header/Header';
-import GameContainer from './containers/GameContainer/GameContainer';
 import Footer from './components/Footer/Footer';
 
+const TrollGame = React.lazy(() => import('./containers/TrollGame/TrollGame'));
+
 function App() {
+  const routes = (
+    <Switch>
+      <Route path="/" exact>Landing page will be added..</Route>
+      <Route path="/trollgame" component={TrollGame} />
+    </Switch>
+  );
+
   return (
     <div className="app">
       <Header />
-      <GameContainer />
+      <Suspense fallback={<p>Loading...</p>}>
+        {routes}
+      </Suspense>
       <Footer />
     </div>
   );
