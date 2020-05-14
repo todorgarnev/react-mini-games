@@ -6,12 +6,14 @@ import Header from './components/Header/Header';
 import Footer from './components/Footer/Footer';
 
 const TrollGame = React.lazy(() => import('./containers/TrollGame/TrollGame'));
+const DragonGame = React.lazy(() => import('./containers/DragonGame/DragonGame'));
 
 function App() {
   const routes = (
     <Switch>
       <Route path="/" exact>Landing page will be added..</Route>
       <Route path="/trollgame" component={TrollGame} />
+      <Route path="/slayingdragon" component={DragonGame} />
     </Switch>
   );
 

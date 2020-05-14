@@ -13,7 +13,7 @@ const TrollGame = () => {
     setOptions(trollGame.intro.options);
   }, []);
 
-  const clickHandler = (path) => {
+  const clickHandler = path => {
     setPrompt(trollGame[path].prompt);
     setOptions(trollGame[path].options);
   }
