@@ -15,7 +15,7 @@ const DragonGame = () => {
     hitDmg >= dragonHealth
       ? setResult(<p>You hit the dragon and did <span>{hitDmg}</span> damage! You did it! You slew the dragon!</p>)
       : setResult(<p>The dragon burninates you! You're toast.</p>)
-  }
+  };
 
   return (
     <main className={styles.dragonGameContainer}>
@@ -24,7 +24,7 @@ const DragonGame = () => {
       </header>
       <div className={styles.mainSection}>
         {result}
-        <Button click={fight}>Play</Button>
+        <Button onClick={fight}>Play</Button>
       </div>
     </main>
   );

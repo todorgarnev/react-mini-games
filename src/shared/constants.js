@@ -16,3 +16,5 @@ export const gamesLink = [
     link: '/targetsum'
   }
 ];
+
+export const choices = ['rock', 'scissor', 'paper'];
