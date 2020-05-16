@@ -17,4 +17,4 @@ export const gamesLink = [
   }
 ];
 
-export const choices = ['rock', 'scissor', 'paper'];
+export const choices = ['rock', 'scissors', 'paper'];

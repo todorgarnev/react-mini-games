@@ -26,7 +26,7 @@ const TrollGame = () => {
       <div className={styles.mainSection}>
         <p>{prompt}</p>
         <div className={styles.buttonsContainer}>
-          {options.map((option, index) => <Button key={index} onClick={() => clickHandler(option.path)}>{option.name}</Button>)}
+          {options.map((option, index) => <Button key={index} click={() => clickHandler(option.path)}>{option.name}</Button>)}
         </div>
       </div>
     </main>

@@ -39,6 +39,11 @@ h1 {
   cursor: pointer;
 }
 
-.choice:nth-child(2) {
-  width: 6rem;
+.choice:nth-child(2) img {
+  transform: scale(1.3);
+}
+
+span {
+  color: #e84949;
+  font-weight: 700;
 }
