@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useReducer } from 'react';
 import styles from './RockPaperScissors.module.css';
 
 import scissors from '../../assets/images/scissors.png';
@@ -6,40 +6,65 @@ import rock from '../../assets/images/rock.png';
 import paper from '../../assets/images/paper.png';
 import { choices } from '../../shared/constants';
 
+const initialState = {
+  userChoice: null,
+  aiChoice: null,
+  roundResult: null,
+  result: null
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'setUserChoice':
+      return { ...state, userChoice: action.payload };
+    case 'setAiChoice':
+      return { ...state, aiChoice: action.payload };
+    case 'roundResult':
+      return { ...state, roundResult: action.payload };
+    case 'result':
+      return { ...state, result: action.payload };
+    default:
+      throw new Error();
+  }
+}
+
 const RockPaperScissors = () => {
-  const [result, setResult] = useState(<p>Make your choice and cross your fingers to win against the AI..</p>);
-  const [aiChoice, setAiChoice] = useState(null);
-  const [userChoice, setUserChoice] = useState(null);
-  const [roundResult, setRoundResult] = useState(null);
   const choiceUrls = { scissors, rock, paper };
 
-  useEffect(() => {
-    setAiChoiceHandler();
-    compare();
-    setResult(<p>Computer's choice: <span>{aiChoice}</span>. {roundResult}</p>);
-  }, [userChoice, aiChoice]);
+  const [state, dispatch] = useReducer(reducer, initialState);
 
-  const userChoiceHandler = userChoice => setUserChoice(userChoice);
+
+  const userChoiceHandler = userChoice => {
+    dispatch({ type: 'setUserChoice', payload: userChoice });
+    dispatch({ type: 'setAiChoice', payload: setAiChoiceHandler() });
+    dispatch({ type: 'roundResult', payload: compare() });
+    dispatch({ type: 'result', payload: `Computer's choice: ${state.aiChoice}. ${state.roundResult}` });
+
+    console.log('state >>', state);
+  }
 
   const setAiChoiceHandler = () => {
     const minNumber = 0;
     const maxNumber = 2;
-    setAiChoice(choices[Math.floor(Math.random() * (maxNumber - minNumber + 1) + minNumber)]);
+    return choices[Math.floor(Math.random() * (maxNumber - minNumber + 1) + minNumber)];
   };
 
   const compare = () => {
-    console.log('userChoice >>', userChoice);
-    console.log('aiChoice >>', aiChoice);
-
-    const test = userChoice === aiChoice ? 'The result is a tie!'
-      : (userChoice === 'rock' && aiChoice === 'scissors') ? 'You win!'
-        : (userChoice === 'scissors' && aiChoice === 'rock') ? 'Computer wins!'
-          : (userChoice === 'paper' && aiChoice === 'rock') ? 'You win!'
-            : (userChoice === 'rock' && aiChoice === 'paper') ? 'Computer wins!'
-              : (userChoice === 'scissors' && aiChoice === 'paper') ? 'You win!'
-                : (userChoice === 'paper' && aiChoice === 'scissors') ? 'Computer wins!'
-                  : null;
-    setRoundResult(test);
+    if (
+      (state.userChoice === 'rock' && state.aiChoice === 'scissors') ||
+      (state.userChoice === 'paper' && state.aiChoice === 'rock') ||
+      (state.userChoice === 'scissors' && state.aiChoice === 'paper')
+    ) {
+      return 'You win!';
+    } else if (
+      (state.userChoice === 'scissors' && state.aiChoice === 'rock') ||
+      (state.userChoice === 'rock' && state.aiChoice === 'paper') ||
+      (state.userChoice === 'paper' && state.aiChoice === 'scissors')
+    ) {
+      return 'Computer wins!';
+    } else {
+      return 'The result is a tie!';
+    }
   };
 
   return (
@@ -48,7 +73,7 @@ const RockPaperScissors = () => {
         <h1>Rock, paper, scissors game</h1>
       </header>
       <div className={styles.mainSection}>
-        {result}
+        {state.result || 'Make your choice and cross your fingers to win against the AI..'}
         <div className={styles.choicesContainer}>
           {choices.map((choice, index) => (
             <div key={index} className={styles.choice} onClick={() => userChoiceHandler(choice)}>
