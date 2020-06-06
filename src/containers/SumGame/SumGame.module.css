@@ -55,7 +55,13 @@ h1 {
 
 .footer .start:hover {
   cursor: pointer;
+  opacity: 0.6;
+}
+
+.footer .start:focus {
+  outline: initial;
 }
 
 .footer .timerValue {
+  font-weight: 700;
 }
