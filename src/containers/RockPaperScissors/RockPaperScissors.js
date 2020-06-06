@@ -1,71 +1,64 @@
-import React, { useReducer } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styles from './RockPaperScissors.module.css';
 
 import scissors from '../../assets/images/scissors.png';
 import rock from '../../assets/images/rock.png';
 import paper from '../../assets/images/paper.png';
-import { choices } from '../../shared/constants';
-
-const initialState = {
-  userChoice: null,
-  aiChoice: null,
-  roundResult: null,
-  result: null
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'setUserChoice':
-      return { ...state, userChoice: action.payload };
-    case 'setAiChoice':
-      return { ...state, aiChoice: action.payload };
-    case 'roundResult':
-      return { ...state, roundResult: action.payload };
-    case 'result':
-      return { ...state, result: action.payload };
-    default:
-      throw new Error();
-  }
-}
+import { options } from '../../shared/constants';
 
 const RockPaperScissors = () => {
+  const [choices, setChoices] = useState({
+    userChoice: null,
+    aiChoice: null
+  });
+  const [result, setResult] = useState('Make your choice and cross your fingers to win against the AI..');
   const choiceUrls = { scissors, rock, paper };
 
-  const [state, dispatch] = useReducer(reducer, initialState);
-
-
   const userChoiceHandler = userChoice => {
-    dispatch({ type: 'setUserChoice', payload: userChoice });
-    dispatch({ type: 'setAiChoice', payload: setAiChoiceHandler() });
-    dispatch({ type: 'roundResult', payload: compare() });
-    dispatch({ type: 'result', payload: `Computer's choice: ${state.aiChoice}. ${state.roundResult}` });
-
-    console.log('state >>', state);
+    setChoices({
+      userChoice: userChoice,
+      aiChoice: setAiChoiceHandler()
+    });
   }
 
   const setAiChoiceHandler = () => {
     const minNumber = 0;
     const maxNumber = 2;
-    return choices[Math.floor(Math.random() * (maxNumber - minNumber + 1) + minNumber)];
+    return options[Math.floor(Math.random() * (maxNumber - minNumber + 1) + minNumber)];
   };
 
-  const compare = () => {
+  const compare = useCallback(() => {
+    const { userChoice, aiChoice } = choices;
+
     if (
-      (state.userChoice === 'rock' && state.aiChoice === 'scissors') ||
-      (state.userChoice === 'paper' && state.aiChoice === 'rock') ||
-      (state.userChoice === 'scissors' && state.aiChoice === 'paper')
+      (userChoice === 'rock' && aiChoice === 'scissors') ||
+      (userChoice === 'paper' && aiChoice === 'rock') ||
+      (userChoice === 'scissors' && aiChoice === 'paper')
     ) {
       return 'You win!';
     } else if (
-      (state.userChoice === 'scissors' && state.aiChoice === 'rock') ||
-      (state.userChoice === 'rock' && state.aiChoice === 'paper') ||
-      (state.userChoice === 'paper' && state.aiChoice === 'scissors')
+      (userChoice === 'scissors' && aiChoice === 'rock') ||
+      (userChoice === 'rock' && aiChoice === 'paper') ||
+      (userChoice === 'paper' && aiChoice === 'scissors')
     ) {
       return 'Computer wins!';
     } else {
       return 'The result is a tie!';
     }
-  };
+  }, [choices]);
+
+  useEffect(() => {
+    if (choices.userChoice !== null) {
+      const resultContainer = (
+        <React.Fragment>
+          <div>Ai choice: <span>{choices.aiChoice}</span>.</div>
+          <div className={styles.result}>{compare()}</div>
+        </React.Fragment>
+      );
+
+      setResult(resultContainer);
+    }
+  }, [choices, compare]);
 
   return (
     <main className={styles.gameContainer}>
@@ -73,9 +66,9 @@ const RockPaperScissors = () => {
         <h1>Rock, paper, scissors game</h1>
       </header>
       <div className={styles.mainSection}>
-        {state.result || 'Make your choice and cross your fingers to win against the AI..'}
+        {result}
         <div className={styles.choicesContainer}>
-          {choices.map((choice, index) => (
+          {options.map((choice, index) => (
             <div key={index} className={styles.choice} onClick={() => userChoiceHandler(choice)}>
               <img src={choiceUrls[choice]} alt={choice} />
             </div>
