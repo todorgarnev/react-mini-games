@@ -8,6 +8,7 @@ import Footer from './components/Footer/Footer';
 const TrollGame = React.lazy(() => import('./containers/TrollGame/TrollGame'));
 const DragonGame = React.lazy(() => import('./containers/DragonGame/DragonGame'));
 const RockPaperScissors = React.lazy(() => import('./containers/RockPaperScissors/RockPaperScissors'));
+const SumGame = React.lazy(() => import('./containers/SumGame/SumGame'));
 
 function App() {
   const routes = (
@@ -16,6 +17,7 @@ function App() {
       <Route path="/trollgame" component={TrollGame} />
       <Route path="/slayingdragon" component={DragonGame} />
       <Route path="/rockpaperscissors" component={RockPaperScissors} />
+      <Route path="/targetsum" component={SumGame} />
     </Switch>
   );
 

@@ -1,0 +1,10 @@
+.number {
+  margin: 0.5rem;
+  padding: 1rem;
+  width: 10rem;
+  background-color: #0ac;
+}
+
+.number:hover {
+  cursor: pointer;
+}
