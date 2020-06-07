@@ -1,44 +1,50 @@
-import React, { useState } from 'react';
+import React, { useReducer, useEffect } from 'react';
 import styles from './SumGame.module.css';
 
 import Number from './Number/Number';
+import { getNumbers, calculateSum } from './utility';
+
+const initialState = {
+  gameStarted: false,
+  numbers: ['?', '?', '?', '?', '?', '?'],
+  target: '?',
+};
+
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'START_GAME':
+      return {
+        ...state,
+        gameStarted: true
+      };
+    case 'GENERATE_NUMBERS':
+      return {
+        ...state,
+        numbers: action.numbers
+      };
+    case 'GENERATE_TARGET':
+      return {
+        ...state,
+        target: action.target
+      };
+    default:
+      return state;
+  }
+};
 
 const SumGame = () => {
-  const [gameStarted, setGameStarted] = useState(false);
-  const [numbers, setNumbers] = useState(['?', '?', '?', '?', '?', '?']);
-  const [target, setTarget] = useState(0);
+  const [config, dispatch] = useReducer(reducer, initialState);
   const gameSize = 6;
 
-  const getRandomNumber = (numMin, numMax) => Math.floor(Math.random() * (numMax - numMin + 1)) + numMin;
-
-  const getNumbers = () => {
-    const numbersArray = [];
-
-    for (let i = 0; i < gameSize; i++) {
-      numbersArray.push(getRandomNumber(1, 9));
+  useEffect(() => {
+    if (config.gameStarted) {
+      dispatch({ type: 'GENERATE_TARGET', target: calculateSum([...config.numbers]) });
     }
-
-    setNumbers(numbersArray);
-    calculateSum([...numbersArray]);
-  }
-
-  const calculateSum = numbersArr => {
-    let sum = 0;
-    let numMax = 5;
-
-    for (let i = 0; i <= numbersArr.length; i++) {
-      const tempNumberPosition = getRandomNumber(0, numMax);
-      sum += numbersArr[tempNumberPosition];
-      numbersArr.splice(tempNumberPosition, 1);
-      numMax -= 1;
-    }
-
-    setTarget(sum);
-  }
+  }, [config.numbers]);
 
   const start = () => {
-    // setGameStarted(!gameStarted);
-    getNumbers();
+    dispatch({ type: 'START_GAME' });
+    dispatch({ type: 'GENERATE_NUMBERS', numbers: getNumbers(gameSize) });;
   }
 
   return (
@@ -47,9 +53,9 @@ const SumGame = () => {
         <h1>The targe sum</h1>
       </header>
       <div className={styles.mainSection}>
-        <div className={styles.target}>{target}</div>
+        <div className={styles.target}>{config.target}</div>
         <div className={styles.challengeNumbers}>
-          {numbers.map((number, index) => (
+          {config.numbers.map((number, index) => (
             <Number
               key={index}
               number={number}
@@ -58,7 +64,7 @@ const SumGame = () => {
         </div>
         <div className={styles.footer}>
           <div className={styles.timerValue}>10</div>
-          <button className={styles.start} onClick={() => getNumbers()}>Start</button>
+          <button className={styles.start} onClick={() => start()}>Start</button>
         </div>
       </div>
     </main>
