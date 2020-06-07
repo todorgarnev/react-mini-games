@@ -8,6 +8,7 @@ const initialState = {
   gameStarted: false,
   numbers: ['?', '?', '?', '?', '?', '?'],
   target: '?',
+  selectedNumbersSum: 0
 };
 
 const reducer = (state, action) => {
@@ -20,12 +21,22 @@ const reducer = (state, action) => {
     case 'GENERATE_NUMBERS':
       return {
         ...state,
-        numbers: action.numbers
+        numbers: getNumbers()
       };
     case 'GENERATE_TARGET':
       return {
         ...state,
-        target: action.target
+        target: calculateSum([...state.numbers])
+      };
+    case 'ADD_NUMBER_TO_SUM':
+      return {
+        ...state,
+        selectedNumbersSum: state.selectedNumbersSum + action.selectedNumber
+      };
+    case 'CLEAR_SELECTED_NUMBER_SUM':
+      return {
+        ...state,
+        selectedNumbersSum: 0
       };
     default:
       return state;
@@ -34,17 +45,26 @@ const reducer = (state, action) => {
 
 const SumGame = () => {
   const [config, dispatch] = useReducer(reducer, initialState);
-  const gameSize = 6;
 
   useEffect(() => {
     if (config.gameStarted) {
-      dispatch({ type: 'GENERATE_TARGET', target: calculateSum([...config.numbers]) });
+      dispatch({ type: 'GENERATE_TARGET' });
     }
-  }, [config.numbers]);
+  }, [config.numbers, config.gameStarted]);
+
+  useEffect(() => {
+    console.log('selectedNumbersSum >>', config.selectedNumbersSum);
+  }, [config.selectedNumbersSum]);
 
   const start = () => {
     dispatch({ type: 'START_GAME' });
-    dispatch({ type: 'GENERATE_NUMBERS', numbers: getNumbers(gameSize) });;
+    dispatch({ type: 'CLEAR_SELECTED_NUMBER_SUM' });
+    dispatch({ type: 'GENERATE_NUMBERS' });;
+  }
+
+  const getSelectedNumber = chosenNumber => {
+    dispatch({ type: 'ADD_NUMBER_TO_SUM', selectedNumber: chosenNumber })
+    console.log(chosenNumber);
   }
 
   return (
@@ -59,6 +79,7 @@ const SumGame = () => {
             <Number
               key={index}
               number={number}
+              clicked={getSelectedNumber}
             />)
           )}
         </div>

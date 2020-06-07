@@ -1,11 +1,11 @@
 const getRandomNumber = (numMin, numMax) => Math.floor(Math.random() * (numMax - numMin + 1)) + numMin;
 
-export const getNumbers = gameSize => {
+export const getNumbers = () => {
   const numbersArray = [];
   const minNumber = 1;
   const maxNumber = 9;
 
-  for (let i = 0; i < gameSize; i++) {
+  for (let i = 0; i < 6; i++) {
     numbersArray.push(getRandomNumber(minNumber, maxNumber));
   }
 
