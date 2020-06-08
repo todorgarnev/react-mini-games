@@ -1,10 +1,20 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './Number.module.css';
 
-const Number = (props) => (
-  <div className={styles.number} onClick={() => props.clicked(props.number)}>
-    {props.number}
-  </div>
-);
+const Number = (props) => {
+  const [clicked, setClicked] = useState(false);
+
+  const click = () => {
+    setClicked(true);
+    props.selectNumber(props.number)
+  };
+
+  return (
+    <div className={`${styles.number} ${clicked && props.started && styles.clicked}`} onClick={() => click()}>
+      {props.number}
+    </div>
+  );
+
+};
 
 export default Number;

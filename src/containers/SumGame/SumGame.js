@@ -2,13 +2,15 @@ import React, { useReducer, useEffect } from 'react';
 import styles from './SumGame.module.css';
 
 import Number from './Number/Number';
-import { getNumbers, calculateSum } from './utility';
+import { getNumbers, calculateSum } from '../../shared/utility/sumGame';
+import { useCallback } from 'react';
 
 const initialState = {
   gameStarted: false,
   numbers: ['?', '?', '?', '?', '?', '?'],
   target: '?',
-  selectedNumbersSum: 0
+  selectedNumbersSum: 0,
+  timer: 10
 };
 
 const reducer = (state, action) => {
@@ -38,6 +40,16 @@ const reducer = (state, action) => {
         ...state,
         selectedNumbersSum: 0
       };
+    case 'UPDATE_TIME':
+      return {
+        ...state,
+        timer: state.timer - 1
+      };
+    case 'RESET_TIME':
+      return {
+        ...state,
+        timer: 10
+      };
     default:
       return state;
   }
@@ -45,6 +57,7 @@ const reducer = (state, action) => {
 
 const SumGame = () => {
   const [config, dispatch] = useReducer(reducer, initialState);
+  let getTimer = null;
 
   useEffect(() => {
     if (config.gameStarted) {
@@ -52,20 +65,46 @@ const SumGame = () => {
     }
   }, [config.numbers, config.gameStarted]);
 
-  useEffect(() => {
-    console.log('selectedNumbersSum >>', config.selectedNumbersSum);
-  }, [config.selectedNumbersSum]);
-
   const start = () => {
     dispatch({ type: 'START_GAME' });
     dispatch({ type: 'CLEAR_SELECTED_NUMBER_SUM' });
-    dispatch({ type: 'GENERATE_NUMBERS' });;
+    dispatch({ type: 'GENERATE_NUMBERS' });
+
+    getTimer = setInterval(() => dispatch({ type: 'UPDATE_TIME' }), 1000);
   }
 
   const getSelectedNumber = chosenNumber => {
+    console.log('!');
     dispatch({ type: 'ADD_NUMBER_TO_SUM', selectedNumber: chosenNumber })
-    console.log(chosenNumber);
   }
+
+  const success = () => {
+    // color target green
+    endGame();
+  }
+
+  const endGame = useCallback(() => {
+    console.log('interval cleared');
+    clearInterval(getTimer);
+  }, [getTimer]);
+
+  const fail = useCallback(() => {
+    // color target red
+    endGame();
+    console.log('fail');
+  }, [endGame]);
+
+  useEffect(() => {
+    if (config.timer === 0) {
+      fail();
+    }
+  }, [config.timer, fail])
+
+  useEffect(() => {
+    return () => {
+      clearInterval(getTimer);
+    }
+  }, []);
 
   return (
     <main className={styles.gameContainer}>
@@ -79,12 +118,13 @@ const SumGame = () => {
             <Number
               key={index}
               number={number}
-              clicked={getSelectedNumber}
+              selectNumber={getSelectedNumber}
+              started={config.gameStarted}
             />)
           )}
         </div>
         <div className={styles.footer}>
-          <div className={styles.timerValue}>10</div>
+          <div className={styles.timerValue}>{config.timer}</div>
           <button className={styles.start} onClick={() => start()}>Start</button>
         </div>
       </div>

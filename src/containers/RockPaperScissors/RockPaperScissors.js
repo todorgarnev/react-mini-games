@@ -4,7 +4,7 @@ import styles from './RockPaperScissors.module.css';
 import scissors from '../../assets/images/scissors.png';
 import rock from '../../assets/images/rock.png';
 import paper from '../../assets/images/paper.png';
-import { options } from '../../shared/constants';
+import { options } from '../../shared/constants/constants';
 
 const RockPaperScissors = () => {
   const [choices, setChoices] = useState({
