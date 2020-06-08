@@ -1,63 +1,21 @@
-import React, { useReducer, useEffect } from 'react';
+import React, { useReducer, useEffect, useCallback } from 'react';
 import styles from './SumGame.module.css';
 
 import Number from './Number/Number';
-import { getNumbers, calculateSum } from '../../shared/utility/sumGame';
-import { useCallback } from 'react';
+import { reducer } from './reducer';
 
 const initialState = {
   gameStarted: false,
   numbers: ['?', '?', '?', '?', '?', '?'],
   target: '?',
   selectedNumbersSum: 0,
-  timer: 10
-};
-
-const reducer = (state, action) => {
-  switch (action.type) {
-    case 'START_GAME':
-      return {
-        ...state,
-        gameStarted: true
-      };
-    case 'GENERATE_NUMBERS':
-      return {
-        ...state,
-        numbers: getNumbers()
-      };
-    case 'GENERATE_TARGET':
-      return {
-        ...state,
-        target: calculateSum([...state.numbers])
-      };
-    case 'ADD_NUMBER_TO_SUM':
-      return {
-        ...state,
-        selectedNumbersSum: state.selectedNumbersSum + action.selectedNumber
-      };
-    case 'CLEAR_SELECTED_NUMBER_SUM':
-      return {
-        ...state,
-        selectedNumbersSum: 0
-      };
-    case 'UPDATE_TIME':
-      return {
-        ...state,
-        timer: state.timer - 1
-      };
-    case 'RESET_TIME':
-      return {
-        ...state,
-        timer: 10
-      };
-    default:
-      return state;
-  }
+  timer: 10,
+  startButton: 'Start',
+  timeInterval: null
 };
 
 const SumGame = () => {
   const [config, dispatch] = useReducer(reducer, initialState);
-  let getTimer = null;
 
   useEffect(() => {
     if (config.gameStarted) {
@@ -66,11 +24,14 @@ const SumGame = () => {
   }, [config.numbers, config.gameStarted]);
 
   const start = () => {
+    const getTimer = setInterval(() => dispatch({ type: 'UPDATE_TIME' }), 1000);
+
+    dispatch({ type: 'SET_TIME_INTERVAL', timeInterval: getTimer });
+
     dispatch({ type: 'START_GAME' });
     dispatch({ type: 'CLEAR_SELECTED_NUMBER_SUM' });
     dispatch({ type: 'GENERATE_NUMBERS' });
-
-    getTimer = setInterval(() => dispatch({ type: 'UPDATE_TIME' }), 1000);
+    dispatch({ type: 'UPDATE_START_BUTTON' });
   }
 
   const getSelectedNumber = chosenNumber => {
@@ -78,15 +39,18 @@ const SumGame = () => {
     dispatch({ type: 'ADD_NUMBER_TO_SUM', selectedNumber: chosenNumber })
   }
 
-  const success = () => {
-    // color target green
-    endGame();
-  }
+  // const success = () => {
+  //   // color target green
+  //   endGame();
+  // }
 
   const endGame = useCallback(() => {
     console.log('interval cleared');
-    clearInterval(getTimer);
-  }, [getTimer]);
+    dispatch({ type: 'END_GAME' });
+    dispatch({ type: 'RESET_TIME' });
+    clearInterval(config.timeInterval);
+    dispatch({ type: 'CLEAR_TIME_INTERVAL' });
+  }, [config.timeInterval]);
 
   const fail = useCallback(() => {
     // color target red
@@ -102,7 +66,8 @@ const SumGame = () => {
 
   useEffect(() => {
     return () => {
-      clearInterval(getTimer);
+      clearInterval(config.timeInterval);
+      dispatch({ type: 'CLEAR_TIME_INTERVAL' });
     }
   }, []);
 
@@ -124,8 +89,13 @@ const SumGame = () => {
           )}
         </div>
         <div className={styles.footer}>
-          <div className={styles.timerValue}>{config.timer}</div>
-          <button className={styles.start} onClick={() => start()}>Start</button>
+          {
+            config.gameStarted ?
+              <div className={styles.timerValue}>{config.timer}</div> :
+              <button className={styles.start} onClick={() => start()}>
+                {config.startButton}
+              </button>
+          }
         </div>
       </div>
     </main>

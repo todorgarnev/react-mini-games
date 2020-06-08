@@ -3,8 +3,6 @@ import { Route, Switch } from 'react-router-dom';
 import './App.css';
 
 import Header from './components/Header/Header';
-import Footer from './components/Footer/Footer';
-
 const TrollGame = React.lazy(() => import('./containers/TrollGame/TrollGame'));
 const DragonGame = React.lazy(() => import('./containers/DragonGame/DragonGame'));
 const RockPaperScissors = React.lazy(() => import('./containers/RockPaperScissors/RockPaperScissors'));
@@ -27,7 +25,6 @@ function App() {
       <Suspense fallback={<p>Loading...</p>}>
         {routes}
       </Suspense>
-      <Footer />
     </div>
   );
 }
