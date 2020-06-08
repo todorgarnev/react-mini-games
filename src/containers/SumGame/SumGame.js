@@ -11,7 +11,8 @@ const initialState = {
   selectedNumbersSum: 0,
   timer: 10,
   startButton: 'Start',
-  timeInterval: null
+  timeInterval: null,
+  result: null
 };
 
 const SumGame = () => {
@@ -23,11 +24,20 @@ const SumGame = () => {
     }
   }, [config.numbers, config.gameStarted]);
 
+  useEffect(() => {
+    if (config.selectedNumbersSum !== 0) {
+      if (config.selectedNumbersSum > config.target) {
+        fail();
+      } else if (config.selectedNumbersSum === config.target) {
+        success();
+      }
+    }
+  }, [config.selectedNumbersSum]);
+
   const start = () => {
     const getTimer = setInterval(() => dispatch({ type: 'UPDATE_TIME' }), 1000);
 
     dispatch({ type: 'SET_TIME_INTERVAL', timeInterval: getTimer });
-
     dispatch({ type: 'START_GAME' });
     dispatch({ type: 'CLEAR_SELECTED_NUMBER_SUM' });
     dispatch({ type: 'GENERATE_NUMBERS' });
@@ -35,27 +45,24 @@ const SumGame = () => {
   }
 
   const getSelectedNumber = chosenNumber => {
-    console.log('!');
     dispatch({ type: 'ADD_NUMBER_TO_SUM', selectedNumber: chosenNumber })
   }
 
-  // const success = () => {
-  //   // color target green
-  //   endGame();
-  // }
-
   const endGame = useCallback(() => {
-    console.log('interval cleared');
+    clearInterval(config.timeInterval);
     dispatch({ type: 'END_GAME' });
     dispatch({ type: 'RESET_TIME' });
-    clearInterval(config.timeInterval);
     dispatch({ type: 'CLEAR_TIME_INTERVAL' });
   }, [config.timeInterval]);
 
-  const fail = useCallback(() => {
-    // color target red
+  const success = () => {
+    dispatch({ type: 'SET_RESULT', result: 'win' })
     endGame();
-    console.log('fail');
+  }
+
+  const fail = useCallback(() => {
+    dispatch({ type: 'SET_RESULT', result: 'loss' })
+    endGame();
   }, [endGame]);
 
   useEffect(() => {
@@ -77,7 +84,7 @@ const SumGame = () => {
         <h1>The targe sum</h1>
       </header>
       <div className={styles.mainSection}>
-        <div className={styles.target}>{config.target}</div>
+        <div className={`${styles.target} ${styles[config.result]}`}>{config.target}</div>
         <div className={styles.challengeNumbers}>
           {config.numbers.map((number, index) => (
             <Number

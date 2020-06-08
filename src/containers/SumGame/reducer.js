@@ -57,6 +57,11 @@ export const reducer = (state, action) => {
         ...state,
         timeInterval: null
       };
+    case 'SET_RESULT':
+      return {
+        ...state,
+        result: action.result
+      };
     default:
       return state;
   }

@@ -19,7 +19,7 @@ h1 {
 .mainSection {
   padding: 1.5rem 10rem;
   background-color: #d6c2a3;
-  color: #32363f;
+  color: #fff;
   font-size: 1.1rem;
   text-align: center;
 }
@@ -30,6 +30,16 @@ h1 {
   display: inline-block;
   text-align: center;
   background-color: #ffd700;
+  font-size: 1.5rem;
+  font-weight: 700;
+}
+
+.target.win {
+  background-color: #00b100;
+}
+
+.target.loss {
+  background-color: #e04343;
 }
 
 .challengeNumbers {
@@ -46,8 +56,8 @@ h1 {
 .footer .start {
   padding: 0.5rem 1rem;
   border: 1px solid #00b100;
-  color: white;
   background-color: #00b100;
+  color: #fff;
 }
 
 .footer .start:hover {
@@ -60,5 +70,6 @@ h1 {
 }
 
 .footer .timerValue {
+  color: #000;
   font-weight: 700;
 }

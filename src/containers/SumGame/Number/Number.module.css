@@ -15,3 +15,7 @@
   color: #aaa;
   pointer-events: none;
 }
+
+.nonClickable {
+  pointer-events: none;
+}
