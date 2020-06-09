@@ -45,7 +45,7 @@ export const reducer = (state, action) => {
     case 'UPDATE_START_BUTTON':
       return {
         ...state,
-        startButton: 'Play again'
+        playButtonText: 'Play again'
       };
     case 'SET_TIME_INTERVAL':
       return {
@@ -61,6 +61,11 @@ export const reducer = (state, action) => {
       return {
         ...state,
         result: action.result
+      };
+    case 'TOGGLE_PLAY_BUTTON':
+      return {
+        ...state,
+        showPlayButton: !state.showPlayButton
       };
     default:
       return state;

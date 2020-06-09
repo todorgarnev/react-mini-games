@@ -10,9 +10,10 @@ const initialState = {
   target: '?',
   selectedNumbersSum: 0,
   timer: 10,
-  startButton: 'Start',
+  playButtonText: 'Start',
   timeInterval: null,
-  result: null
+  result: null,
+  showPlayButton: true
 };
 
 const SumGame = () => {
@@ -24,24 +25,16 @@ const SumGame = () => {
     }
   }, [config.numbers, config.gameStarted]);
 
-  useEffect(() => {
-    if (config.selectedNumbersSum !== 0) {
-      if (config.selectedNumbersSum > config.target) {
-        fail();
-      } else if (config.selectedNumbersSum === config.target) {
-        success();
-      }
-    }
-  }, [config.selectedNumbersSum]);
-
   const start = () => {
     const getTimer = setInterval(() => dispatch({ type: 'UPDATE_TIME' }), 1000);
 
+    dispatch({ type: 'SET_RESULT', result: null })
     dispatch({ type: 'SET_TIME_INTERVAL', timeInterval: getTimer });
     dispatch({ type: 'START_GAME' });
     dispatch({ type: 'CLEAR_SELECTED_NUMBER_SUM' });
     dispatch({ type: 'GENERATE_NUMBERS' });
     dispatch({ type: 'UPDATE_START_BUTTON' });
+    dispatch({ type: 'TOGGLE_PLAY_BUTTON' });
   }
 
   const getSelectedNumber = chosenNumber => {
@@ -51,25 +44,34 @@ const SumGame = () => {
   const endGame = useCallback(() => {
     clearInterval(config.timeInterval);
     dispatch({ type: 'END_GAME' });
-    dispatch({ type: 'RESET_TIME' });
     dispatch({ type: 'CLEAR_TIME_INTERVAL' });
+    dispatch({ type: 'TOGGLE_PLAY_BUTTON' });
   }, [config.timeInterval]);
-
-  const success = () => {
-    dispatch({ type: 'SET_RESULT', result: 'win' })
-    endGame();
-  }
-
-  const fail = useCallback(() => {
-    dispatch({ type: 'SET_RESULT', result: 'loss' })
-    endGame();
-  }, [endGame]);
 
   useEffect(() => {
     if (config.timer === 0) {
-      fail();
+      endGame();
+      dispatch({ type: 'SET_RESULT', result: 'loss' });
     }
-  }, [config.timer, fail])
+  }, [config.timer, endGame]);
+
+  useEffect(() => {
+    if (config.selectedNumbersSum !== 0) {
+      if (config.selectedNumbersSum > config.target) {
+        dispatch({ type: 'SET_RESULT', result: 'loss' });
+        endGame();
+      } else if (config.selectedNumbersSum === config.target) {
+        dispatch({ type: 'SET_RESULT', result: 'win' });
+        endGame();
+      }
+    }
+  }, [config.selectedNumbersSum, config.target]);
+
+  useEffect(() => {
+    if (!config.showPlayButton) {
+      dispatch({ type: 'RESET_TIME' });
+    }
+  }, [config.showPlayButton]);
 
   useEffect(() => {
     return () => {
@@ -92,17 +94,16 @@ const SumGame = () => {
               number={number}
               selectNumber={getSelectedNumber}
               started={config.gameStarted}
+              showPlayButton={config.showPlayButton}
             />)
           )}
         </div>
         <div className={styles.footer}>
-          {
-            config.gameStarted ?
-              <div className={styles.timerValue}>{config.timer}</div> :
-              <button className={styles.start} onClick={() => start()}>
-                {config.startButton}
-              </button>
-          }
+          <div className={styles.timerValue}>{config.timer}</div>
+          {config.showPlayButton &&
+            <button className={styles.start} onClick={() => start()}>
+              {config.playButtonText}
+            </button>}
         </div>
       </div>
     </main>

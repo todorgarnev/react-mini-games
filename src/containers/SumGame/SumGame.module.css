@@ -51,6 +51,10 @@ h1 {
 
 .footer {
   margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 2.75rem;
 }
 
 .footer .start {
