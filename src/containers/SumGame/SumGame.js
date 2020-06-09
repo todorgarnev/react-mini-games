@@ -48,8 +48,8 @@ const SumGame = () => {
 
   const endGame = useCallback(() => {
     clearInterval(timeInterval);
+    console.log('timeInterval >>', timeInterval);
     dispatch({ type: 'END_GAME' });
-    dispatch({ type: 'CLEAR_TIME_INTERVAL' });
   }, [timeInterval]);
 
   useEffect(() => {
@@ -86,7 +86,6 @@ const SumGame = () => {
   useEffect(() => {
     return () => {
       clearInterval(timeInterval);
-      dispatch({ type: 'CLEAR_TIME_INTERVAL' });
     }
   }, []);
 

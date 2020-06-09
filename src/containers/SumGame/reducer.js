@@ -54,11 +54,6 @@ export const reducer = (state, action) => {
         ...state,
         timeInterval: action.timeInterval
       };
-    case 'CLEAR_TIME_INTERVAL':
-      return {
-        ...state,
-        timeInterval: null
-      };
     case 'SET_RESULT':
       return {
         ...state,
