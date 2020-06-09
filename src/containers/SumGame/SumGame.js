@@ -11,7 +11,6 @@ const initialState = {
   selectedNumbersSum: 0,
   timer: 10,
   playButtonText: 'Start',
-  timeInterval: null,
   result: null,
   showPlayButton: true
 };
@@ -21,7 +20,6 @@ const SumGame = () => {
   const {
     gameStarted,
     numbers,
-    timeInterval,
     timer,
     selectedNumbersSum,
     target,
@@ -29,12 +27,12 @@ const SumGame = () => {
     result,
     playButtonText
   } = config;
+  let timeInterval = null;
 
   const start = () => {
-    const getTimer = setInterval(() => dispatch({ type: 'UPDATE_TIME' }), 1000);
+    timeInterval = setInterval(() => dispatch({ type: 'UPDATE_TIME' }), 1000);
 
     dispatch({ type: 'SET_RESULT', result: null })
-    dispatch({ type: 'SET_TIME_INTERVAL', timeInterval: getTimer });
     dispatch({ type: 'CLEAR_SELECTED_NUMBER_SUM' });
     dispatch({ type: 'RESET_TIME' });
     dispatch({ type: 'START_GAME' });

@@ -49,11 +49,6 @@ export const reducer = (state, action) => {
         ...state,
         playButtonText: 'Play again'
       };
-    case 'SET_TIME_INTERVAL':
-      return {
-        ...state,
-        timeInterval: action.timeInterval
-      };
     case 'SET_RESULT':
       return {
         ...state,
