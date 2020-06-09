@@ -26,6 +26,7 @@ const SumGame = () => {
   }, [config.numbers, config.gameStarted]);
 
   const start = () => {
+    console.log('start')
     const getTimer = setInterval(() => dispatch({ type: 'UPDATE_TIME' }), 1000);
 
     dispatch({ type: 'SET_RESULT', result: null })
@@ -34,7 +35,6 @@ const SumGame = () => {
     dispatch({ type: 'CLEAR_SELECTED_NUMBER_SUM' });
     dispatch({ type: 'GENERATE_NUMBERS' });
     dispatch({ type: 'UPDATE_START_BUTTON' });
-    dispatch({ type: 'TOGGLE_PLAY_BUTTON' });
   }
 
   const getSelectedNumber = chosenNumber => {
@@ -45,7 +45,6 @@ const SumGame = () => {
     clearInterval(config.timeInterval);
     dispatch({ type: 'END_GAME' });
     dispatch({ type: 'CLEAR_TIME_INTERVAL' });
-    dispatch({ type: 'TOGGLE_PLAY_BUTTON' });
   }, [config.timeInterval]);
 
   useEffect(() => {
@@ -68,7 +67,8 @@ const SumGame = () => {
   }, [config.selectedNumbersSum, config.target]);
 
   useEffect(() => {
-    if (!config.showPlayButton) {
+    if (!config.showPlayButton && config.timer === 0) {
+      console.log('reset')
       dispatch({ type: 'RESET_TIME' });
     }
   }, [config.showPlayButton]);

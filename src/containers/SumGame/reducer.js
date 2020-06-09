@@ -5,12 +5,14 @@ export const reducer = (state, action) => {
     case 'START_GAME':
       return {
         ...state,
-        gameStarted: true
+        gameStarted: true,
+        showPlayButton: false
       };
     case 'END_GAME':
       return {
         ...state,
-        gameStarted: false
+        gameStarted: false,
+        showPlayButton: true
       };
     case 'GENERATE_NUMBERS':
       return {
@@ -62,11 +64,12 @@ export const reducer = (state, action) => {
         ...state,
         result: action.result
       };
-    case 'TOGGLE_PLAY_BUTTON':
-      return {
-        ...state,
-        showPlayButton: !state.showPlayButton
-      };
+    // case 'TOGGLE_PLAY_BUTTON':
+    //   console.log('toggle >>', !state.showPlayButton);
+    //   return {
+    //     ...state,
+    //     showPlayButton: !state.showPlayButton
+    //   };
     default:
       return state;
   }
