@@ -48,7 +48,6 @@ const SumGame = () => {
 
   const endGame = useCallback(() => {
     clearInterval(timeInterval);
-    console.log('timeInterval >>', timeInterval);
     dispatch({ type: 'END_GAME' });
   }, [timeInterval]);
 
