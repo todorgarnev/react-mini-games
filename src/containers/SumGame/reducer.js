@@ -64,12 +64,6 @@ export const reducer = (state, action) => {
         ...state,
         result: action.result
       };
-    // case 'TOGGLE_PLAY_BUTTON':
-    //   console.log('toggle >>', !state.showPlayButton);
-    //   return {
-    //     ...state,
-    //     showPlayButton: !state.showPlayButton
-    //   };
     default:
       return state;
   }
