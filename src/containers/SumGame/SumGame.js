@@ -1,4 +1,4 @@
-import React, { useReducer, useEffect, useCallback } from 'react';
+import React, { useReducer, useEffect, useCallback, useState } from 'react';
 import styles from './SumGame.module.css';
 
 import GameContainer from '../../components/GameContainer/GameContainer';
@@ -18,6 +18,7 @@ const initialState = {
 
 const SumGame = () => {
   const [config, dispatch] = useReducer(reducer, initialState);
+  const [timeInterval, setTimeInterval] = useState(null)
   const {
     gameStarted,
     numbers,
@@ -28,10 +29,9 @@ const SumGame = () => {
     result,
     playButtonText
   } = config;
-  let timeInterval = null;
 
   const start = () => {
-    timeInterval = setInterval(() => dispatch({ type: 'UPDATE_TIME' }), 1000);
+    setTimeInterval(setInterval(() => dispatch({ type: 'UPDATE_TIME' }), 1000));
 
     dispatch({ type: 'SET_RESULT', result: null })
     dispatch({ type: 'CLEAR_SELECTED_NUMBER_SUM' });
