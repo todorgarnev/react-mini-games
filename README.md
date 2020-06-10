@@ -1,7 +1,7 @@
-# React Mini Games
+# React mini games
 
 ### Demo
-:video_game: [react-assignment](https://flamboyant-brahmagupta-de75c5.netlify.app) :video_game:
+:video_game: [mini-games](https://fervent-feynman-6714ff.netlify.app/) :video_game:
 
 ### Running The App locally
 
