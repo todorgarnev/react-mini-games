@@ -1,6 +1,7 @@
 import React, { useReducer, useEffect, useCallback } from 'react';
 import styles from './SumGame.module.css';
 
+import GameContainer from '../../components/GameContainer/GameContainer';
 import Number from './Number/Number';
 import { reducer } from './reducer';
 
@@ -87,32 +88,27 @@ const SumGame = () => {
   }, []);
 
   return (
-    <main className={styles.gameContainer}>
-      <header>
-        <h1>The targe sum</h1>
-      </header>
-      <div className={styles.mainSection}>
-        <div className={`${styles.target} ${styles[result]}`}>{target}</div>
-        <div className={styles.challengeNumbers}>
-          {numbers.map((number, index) => (
-            <Number
-              key={index}
-              number={number}
-              selectNumber={getSelectedNumber}
-              started={gameStarted}
-              showPlayButton={showPlayButton}
-            />)
-          )}
-        </div>
-        <div className={styles.footer}>
-          <div className={styles.timerValue}>{timer}</div>
-          {showPlayButton &&
-            <button className={styles.start} onClick={() => start()}>
-              {playButtonText}
-            </button>}
-        </div>
+    <GameContainer gameTitle="The target sum">
+      <div className={`${styles.target} ${styles[result]}`}>{target}</div>
+      <div className={styles.challengeNumbers}>
+        {numbers.map((number, index) => (
+          <Number
+            key={index}
+            number={number}
+            selectNumber={getSelectedNumber}
+            started={gameStarted}
+            showPlayButton={showPlayButton}
+          />)
+        )}
       </div>
-    </main>
+      <div className={styles.footer}>
+        <div className={styles.timerValue}>{timer}</div>
+        {showPlayButton &&
+          <button className={styles.start} onClick={() => start()}>
+            {playButtonText}
+          </button>}
+      </div>
+    </GameContainer>
   );
 };
 

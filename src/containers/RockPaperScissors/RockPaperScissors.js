@@ -5,6 +5,7 @@ import scissors from '../../assets/images/scissors.png';
 import rock from '../../assets/images/rock.png';
 import paper from '../../assets/images/paper.png';
 import { options } from '../../shared/constants/constants';
+import GameContainer from '../../components/GameContainer/GameContainer';
 
 const RockPaperScissors = () => {
   const [choices, setChoices] = useState({
@@ -61,21 +62,16 @@ const RockPaperScissors = () => {
   }, [choices, compare]);
 
   return (
-    <main className={styles.gameContainer}>
-      <header>
-        <h1>Rock, paper, scissors game</h1>
-      </header>
-      <div className={styles.mainSection}>
-        {result}
-        <div className={styles.choicesContainer}>
-          {options.map((choice, index) => (
-            <div key={index} className={styles.choice} onClick={() => userChoiceHandler(choice)}>
-              <img src={choiceUrls[choice]} alt={choice} />
-            </div>
-          ))}
-        </div>
+    <GameContainer gameTitle="Rock, paper, scissors game">
+      {result}
+      <div className={styles.choicesContainer}>
+        {options.map((choice, index) => (
+          <div key={index} className={styles.choice} onClick={() => userChoiceHandler(choice)}>
+            <img src={choiceUrls[choice]} alt={choice} />
+          </div>
+        ))}
       </div>
-    </main>
+    </GameContainer>
   );
 };
 

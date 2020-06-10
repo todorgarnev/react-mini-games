@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import styles from './TrollGame.module.css';
 
+import GameContainer from '../../components/GameContainer/GameContainer';
 import Button from '../../components/UI/Button/Button';
 import { trollGame } from './trollGameConfig';
 
@@ -19,17 +20,13 @@ const TrollGame = () => {
   }
 
   return (
-    <main className={styles.trollGameContainer}>
-      <header>
-        <h1>{trollGame.gameTitle}</h1>
-      </header>
-      <div className={styles.mainSection}>
-        <p>{prompt}</p>
-        <div className={styles.buttonsContainer}>
-          {options.map((option, index) => <Button key={index} click={() => clickHandler(option.path)}>{option.name}</Button>)}
-        </div>
+    <GameContainer gameTitle={trollGame.gameTitle}>
+      <p>{prompt}</p>
+      <div className={styles.buttonsContainer}>
+        {options.map((option, index) => <Button key={index} click={() => clickHandler(option.path)}>{option.name}</Button>)}
       </div>
-    </main>
+    </GameContainer>
+
   );
 };
 

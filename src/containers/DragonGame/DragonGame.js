@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import styles from './DragonGame.module.css';
 
+import GameContainer from '../../components/GameContainer/GameContainer';
 import Button from '../../components/UI/Button/Button';
-
 
 const DragonGame = () => {
   const [hitDmg, setHitDmg] = useState(null);
@@ -18,15 +18,10 @@ const DragonGame = () => {
   };
 
   return (
-    <main className={styles.dragonGameContainer}>
-      <header>
-        <h1>Kill  the dragon</h1>
-      </header>
-      <div className={styles.mainSection}>
-        {result}
-        <Button click={fight}>Play</Button>
-      </div>
-    </main>
+    <GameContainer gameTitle="Kill  the dragon">
+      <p className={styles.result}>{result}</p>
+      <Button click={fight}>Play</Button>
+    </GameContainer>
   );
 };
 
