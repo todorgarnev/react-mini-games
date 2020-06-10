@@ -89,24 +89,26 @@ const SumGame = () => {
 
   return (
     <GameContainer gameTitle="The target sum">
-      <div className={`${styles.target} ${styles[result]}`}>{target}</div>
-      <div className={styles.challengeNumbers}>
-        {numbers.map((number, index) => (
-          <Number
-            key={index}
-            number={number}
-            selectNumber={getSelectedNumber}
-            started={gameStarted}
-            showPlayButton={showPlayButton}
-          />)
-        )}
-      </div>
-      <div className={styles.footer}>
-        <div className={styles.timerValue}>{timer}</div>
-        {showPlayButton &&
-          <button className={styles.start} onClick={() => start()}>
-            {playButtonText}
-          </button>}
+      <div className={styles.innerContainer}>
+        <div className={`${styles.target} ${styles[result]}`}>{target}</div>
+        <div className={styles.challengeNumbers}>
+          {numbers.map((number, index) => (
+            <Number
+              key={index}
+              number={number}
+              selectNumber={getSelectedNumber}
+              started={gameStarted}
+              showPlayButton={showPlayButton}
+            />)
+          )}
+        </div>
+        <div className={styles.footer}>
+          <div className={styles.timerValue}>{timer}</div>
+          {showPlayButton &&
+            <button className={styles.start} onClick={() => start()}>
+              {playButtonText}
+            </button>}
+        </div>
       </div>
     </GameContainer>
   );

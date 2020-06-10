@@ -19,7 +19,7 @@ const DragonGame = () => {
 
   return (
     <GameContainer gameTitle="Kill  the dragon">
-      <p className={styles.result}>{result}</p>
+      <div className={styles.result}>{result}</div>
       <Button click={fight}>Play</Button>
     </GameContainer>
   );

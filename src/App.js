@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import './App.css';
 
+import LandingPage from './components/LandingPage/LandingPage';
 import Header from './components/Header/Header';
 const TrollGame = React.lazy(() => import('./containers/TrollGame/TrollGame'));
 const DragonGame = React.lazy(() => import('./containers/DragonGame/DragonGame'));
@@ -11,7 +12,7 @@ const SumGame = React.lazy(() => import('./containers/SumGame/SumGame'));
 function App() {
   const routes = (
     <Switch>
-      <Route path="/" exact>Landing page will be added..</Route>
+      <Route path="/" exact component={LandingPage} />
       <Route path="/trollgame" component={TrollGame} />
       <Route path="/slayingdragon" component={DragonGame} />
       <Route path="/rockpaperscissors" component={RockPaperScissors} />
